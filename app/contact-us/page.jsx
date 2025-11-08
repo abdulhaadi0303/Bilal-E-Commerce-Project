@@ -6,12 +6,22 @@ export default function ContactPage() {
   // ------------------ Internal Components ------------------
 
   const HeroSection = () => (
-    <section className="bg-slate-800 py-20 text-center">
-      <h1 className="text-4xl font-bold text-cyan-400 mb-4">Contact Us</h1>
-      <p className="text-gray-300 max-w-2xl mx-auto">
-        Have questions, bulk order requests, or need custom uniforms?  
-        We’d love to hear from you.
-      </p>
+    <section className="bg-slate-100 py-20 text-center flex flex-col lg:flex-row items-center justify-center gap-10 px-6">
+      <div className="max-w-xl">
+        <h1 className="text-4xl lg:text-5xl font-bold text-cyan-400 mb-4">
+          Contact Us
+        </h1>
+        <p className="text-gray-900 text-2xl">
+          Have questions, bulk order requests, or need custom uniforms?  
+          We’d love to hear from you — reach out anytime.
+        </p>
+      </div>
+
+      <img
+        src="https://images.unsplash.com/photo-1525182008055-f88b95ff7980?w=600"
+        alt="Customer Support"
+        className="rounded-2xl shadow-lg w-full max-w-sm lg:max-w-md object-cover"
+      />
     </section>
   );
 
@@ -144,34 +154,10 @@ export default function ContactPage() {
     </section>
   );
 
-  const WhatsAppCTA = () => {
-    const handleWhatsAppClick = () => {
-      const phoneNumber = '923001234567';
-      const message = 'Hi, I have an inquiry regarding your uniforms.';
-      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    };
-
-    return (
-      <section className="bg-emerald-600 text-white text-center py-12 mt-20">
-        <h2 className="text-3xl font-bold mb-4">Need Quick Assistance?</h2>
-        <p className="text-white/90 mb-6">
-          Chat with our team directly on WhatsApp
-        </p>
-        <button
-          onClick={handleWhatsAppClick}
-          className="bg-white text-emerald-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
-        >
-          Chat Now →
-        </button>
-      </section>
-    );
-  };
-
   // ------------------ Page Layout ------------------
 
   return (
-    <main className="bg-slate-900 text-white min-h-screen">
+    <main className="bg-slate-800 text-white min-h-screen">
       <HeroSection />
 
       <section className="max-w-6xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -180,7 +166,6 @@ export default function ContactPage() {
       </section>
 
       <GoogleMap />
-      <WhatsAppCTA />
     </main>
   );
 }
