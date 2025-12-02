@@ -152,8 +152,8 @@ export default function Header() {
                 {/* Custom Options Dropdown Menu */}
                 {isCustomDropdownOpen && (
                   <div className="absolute top-full left-0 pt-2 -mt-1">
-                    <div className="w-80 bg-white text-slate-800 rounded-lg shadow-xl py-2 border border-gray-200">
-                      <div className="px-4 py-2 border-b border-gray-200">
+                    <div className="w-80 bg-white text-slate-800 rounded-lg shadow-xl py-2 border border-gray-200 max-h-[calc(100vh-120px)] overflow-y-auto">
+                      <div className="px-4 py-2 border-b border-gray-200 sticky top-0 bg-white z-10">
                         <p className="text-xs text-gray-500 font-semibold uppercase">Custom Uniform Categories</p>
                       </div>
                       {customCategories.map((category) => (
@@ -171,17 +171,10 @@ export default function Header() {
                           </div>
                         </Link>
                       ))}
-                      <div className="border-t border-gray-200 mt-2 pt-2">
-                        <Link
-                          href="/custom"
-                          className="block px-4 py-2 text-cyan-600 hover:bg-cyan-50 text-sm font-medium transition"
-                        >
-                          View All Custom Options →
-                        </Link>
-                      </div>
                     </div>
                   </div>
                 )}
+
               </div>
             </nav>
 
