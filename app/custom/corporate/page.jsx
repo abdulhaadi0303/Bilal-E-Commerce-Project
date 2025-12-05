@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { whatsappConfig } from '@/lib/data/navigation';
+import StatsGrid from '../../../components/customPageComponents/StatsGrid';
 
 export default function CorporatePage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -235,21 +236,21 @@ export default function CorporatePage() {
             </Link>
           </div>
 
-          {/* Stats - Glassmorphism Cards */}
-          <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <div className="text-4xl font-bold text-white mb-1">25+</div>
-              <div className="text-sm text-cyan-200">Years Experience</div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-3xl mx-auto px-4">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
+              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">25+</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-cyan-200 leading-tight">Years Experience</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <div className="text-4xl font-bold text-white mb-1">500+</div>
-              <div className="text-sm text-cyan-200">Companies Served</div>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
+              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">500+</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-cyan-200 leading-tight">Companies Served</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <div className="text-4xl font-bold text-white mb-1">50K+</div>
-              <div className="text-sm text-cyan-200">Uniforms Made</div>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
+              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">50K+</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-cyan-200 leading-tight">Uniforms Made</div>
             </div>
           </div>
+
         </div>
 
         {/* Scroll Down Indicator */}
@@ -454,25 +455,20 @@ export default function CorporatePage() {
               </div>
             </div>
 
-            {/* Right: Stats */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-slate-700/50 backdrop-blur rounded-2xl p-8 text-center border border-slate-600">
-                <div className="text-5xl font-bold text-cyan-400 mb-2">500+</div>
-                <div className="text-gray-300">Companies Served</div>
-              </div>
-              <div className="bg-slate-700/50 backdrop-blur rounded-2xl p-8 text-center border border-slate-600">
-                <div className="text-5xl font-bold text-emerald-400 mb-2">50K+</div>
-                <div className="text-gray-300">Uniforms Delivered</div>
-              </div>
-              <div className="bg-slate-700/50 backdrop-blur rounded-2xl p-8 text-center border border-slate-600">
-                <div className="text-5xl font-bold text-cyan-400 mb-2">4.9★</div>
-                <div className="text-gray-300">Customer Rating</div>
-              </div>
-              <div className="bg-slate-700/50 backdrop-blur rounded-2xl p-8 text-center border border-slate-600">
-                <div className="text-5xl font-bold text-emerald-400 mb-2">24/7</div>
-                <div className="text-gray-300">Support Available</div>
-              </div>
-            </div>
+           
+            <StatsGrid 
+              stats={[
+                { value: '500+', label: 'Companies Served' },
+                { value: '50K+', label: 'Uniforms Delivered' },
+                { value: '4.9★', label: 'Customer Rating' },
+                { value: '24/7', label: 'Support Available' }
+              ]}
+              primaryColor="cyan-400"
+              secondaryColor="emerald-400"
+              textColor="gray-300"
+            />
+
+
           </div>
         </div>
       </section>

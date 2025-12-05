@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { whatsappConfig } from '@/lib/data/navigation';
+import StatsGrid from '../../../components/customPageComponents/StatsGrid';
 
 export default function SecuritySafetyPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -247,20 +248,21 @@ export default function SecuritySafetyPage() {
           </div>
 
           {/* Stats - Glassmorphism Cards */}
-          <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <div className="text-4xl font-bold text-white mb-1">25+</div>
-              <div className="text-sm text-gray-300">Years Experience</div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-3xl mx-auto px-4">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
+              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">25+</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-gray-300 leading-tight">Years Experience</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <div className="text-4xl font-bold text-white mb-1">300+</div>
-              <div className="text-sm text-gray-300">Security Forces</div>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
+              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">300+</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-gray-300 leading-tight">Security Forces</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <div className="text-4xl font-bold text-white mb-1">75K+</div>
-              <div className="text-sm text-gray-300">Uniforms Made</div>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
+              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">75K+</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-gray-300 leading-tight">Uniforms Made</div>
             </div>
           </div>
+
         </div>
 
         {/* Scroll Down Indicator */}
@@ -471,25 +473,20 @@ export default function SecuritySafetyPage() {
               </div>
             </div>
 
-            {/* Right: Stats */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8 text-center border border-white/20">
-                <div className="text-5xl font-bold text-red-400 mb-2">300+</div>
-                <div className="text-gray-300">Security Forces</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8 text-center border border-white/20">
-                <div className="text-5xl font-bold text-orange-400 mb-2">75K+</div>
-                <div className="text-gray-300">Uniforms</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8 text-center border border-white/20">
-                <div className="text-5xl font-bold text-red-400 mb-2">4.9★</div>
-                <div className="text-gray-300">Rating</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8 text-center border border-white/20">
-                <div className="text-5xl font-bold text-orange-400 mb-2">24/7</div>
-                <div className="text-gray-300">Support</div>
-              </div>
-            </div>
+            
+            <StatsGrid 
+              stats={[
+                { value: '600+', label: 'Retail Stores' },
+                { value: '80K+', label: 'Uniforms' },
+                { value: '4.9★', label: 'Rating' },
+                { value: '24/7', label: 'Support' }
+              ]}
+              primaryColor="purple-300"
+              secondaryColor="indigo-300"
+              textColor="purple-100"
+            />
+
+
           </div>
         </div>
       </section>

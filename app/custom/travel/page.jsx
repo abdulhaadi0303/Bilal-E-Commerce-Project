@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { whatsappConfig } from '@/lib/data/navigation';
+import StatsGrid from '../../../components/customPageComponents/StatsGrid';
 
 export default function TravelServicePage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -213,20 +214,21 @@ export default function TravelServicePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <div className="text-4xl font-bold text-white mb-1">25+</div>
-              <div className="text-sm text-sky-200">Years Experience</div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-3xl mx-auto px-4">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
+              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">25+</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-sky-200 leading-tight">Years Experience</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <div className="text-4xl font-bold text-white mb-1">50+</div>
-              <div className="text-sm text-sky-200">Airlines & Hotels</div>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
+              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">50+</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-sky-200 leading-tight">Airlines & Hotels</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <div className="text-4xl font-bold text-white mb-1">20K+</div>
-              <div className="text-sm text-sky-200">Crew Uniforms</div>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
+              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">20K+</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-sky-200 leading-tight">Crew Uniforms</div>
             </div>
           </div>
+
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
@@ -421,24 +423,18 @@ export default function TravelServicePage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8 text-center border border-white/20">
-                <div className="text-5xl font-bold text-sky-300 mb-2">50+</div>
-                <div className="text-sky-100">Airlines & Hotels</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8 text-center border border-white/20">
-                <div className="text-5xl font-bold text-blue-300 mb-2">20K+</div>
-                <div className="text-sky-100">Crew Uniforms</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8 text-center border border-white/20">
-                <div className="text-5xl font-bold text-sky-300 mb-2">4.9★</div>
-                <div className="text-sky-100">Rating</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8 text-center border border-white/20">
-                <div className="text-5xl font-bold text-blue-300 mb-2">24/7</div>
-                <div className="text-sky-100">Support</div>
-              </div>
-            </div>
+            <StatsGrid 
+              stats={[
+                { value: '50+', label: 'Airlines & Hotels' },
+                { value: '20K+', label: 'Crew Uniforms' },
+                { value: '4.9★', label: 'Rating' },
+                { value: '24/7', label: 'Support' }
+              ]}
+              primaryColor="sky-300"
+              secondaryColor="blue-300"
+              textColor="sky-100"
+            />
+
           </div>
         </div>
       </section>
