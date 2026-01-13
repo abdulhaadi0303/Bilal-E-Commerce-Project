@@ -3,7 +3,6 @@ import SchoolsSection from '@/components/homeComponents/SchoolsSection';
 import CustomSection from '@/components/homeComponents/CustomSection';
 import WhyChooseSection from '@/components/homeComponents/WhyUs';
 import LocationsSection from '@/components/homeComponents/LocationSection';
-import FinalCTA from '@/components/homeComponents/FinalCTA';
 
 export default function HomePage() {
   return (
