@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { navigationLinks, availableSchools, customCategories, whatsappConfig } from '@/lib/data/navigation';
+import { navigationLinks, customCategories, whatsappConfig } from '@/lib/data/navigation';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -83,53 +83,6 @@ export default function Header() {
                 </Link>
               ))}
 
-              {/* Available Schools Dropdown - Desktop */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setIsSchoolsDropdownOpen(true)}
-                onMouseLeave={() => setIsSchoolsDropdownOpen(false)}
-              >
-                <button className="flex items-center gap-1 text-white hover:text-cyan-400 transition font-medium text-base">
-                  Available Schools
-                  <svg
-                    className={`w-4 h-4 transition-transform ${isSchoolsDropdownOpen ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                {/* Schools Dropdown Menu */}
-                {isSchoolsDropdownOpen && (
-                  <div className="absolute top-full left-0 pt-2 -mt-1">
-                    <div className="w-72 bg-white text-slate-800 rounded-lg shadow-xl py-2 border border-gray-200">
-                      <div className="px-4 py-2 border-b border-gray-200">
-                        <p className="text-xs text-gray-500 font-semibold uppercase">Select School</p>
-                      </div>
-                      {availableSchools.map((school) => (
-                        <Link
-                          key={school.id}
-                          href={`/schools/${school.slug}`}
-                          className="block px-4 py-3 hover:bg-cyan-50 transition"
-                        >
-                          <div className="font-medium text-sm">{school.name}</div>
-                          {/* <div className="text-xs text-gray-500 mt-0.5">{school.location}</div> */}
-                        </Link>
-                      ))}
-                      <div className="border-t border-gray-200 mt-2 pt-2">
-                        <Link
-                          href="/schools"
-                          className="block px-4 py-2 text-cyan-600 hover:bg-cyan-50 text-sm font-medium transition"
-                        >
-                          View All Schools →
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
 
               {/* Custom Options Dropdown - Desktop */}
               <div 
@@ -138,7 +91,7 @@ export default function Header() {
                 onMouseLeave={() => setIsCustomDropdownOpen(false)}
               >
                 <button className="flex items-center gap-1 text-white hover:text-cyan-400 transition font-medium text-base">
-                  Custom Options
+                  Custom Uniforms
                   <svg
                     className={`w-4 h-4 transition-transform ${isCustomDropdownOpen ? 'rotate-180' : ''}`}
                     fill="none"

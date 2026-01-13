@@ -43,7 +43,7 @@ export default function Footer() {
     <footer className="bg-slate-800 text-white">
 
       {/* Final CTA Section (Compact & Streamlined) */}
-      <section ref={sectionRef} className="py-16 bg-linear-to-br from-slate-900 via-cyan-900 to-emerald-900 relative overflow-hidden">
+      <section ref={sectionRef} className="py-16 bg-linear-to-br from-slate-800 via-blue-900 to-slate-800 relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500 rounded-full blur-3xl animate-pulse"></div>
@@ -285,7 +285,7 @@ export default function Footer() {
               ))}
             </ul>
 
-            <h3 className="text-lg font-bold mb-3 text-cyan-400">Follow Us</h3>
+            {/* <h3 className="text-lg font-bold mb-3 text-cyan-400">Follow Us</h3>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
@@ -305,28 +305,17 @@ export default function Footer() {
                   </svg>
                 </a>
               ))}
-            </div>
+            </div> */}
+
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-slate-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-            <p>© {currentYear} FIAZ Uniform. All Rights Reserved.</p>
-            <div className="flex gap-4">
-              <Link href="/privacy-policy" className="hover:text-cyan-400 transition">
-                Privacy Policy
-              </Link>
-              <span>•</span>
-              <Link href="/terms" className="hover:text-cyan-400 transition">
-                Terms of Service
-              </Link>
-            </div>
-          </div>
-        </div>
+      <div className="border-t border-slate-700 py-6 text-center text-sm text-gray-400">
+  © {currentYear} FIAZ Uniform. All Rights Reserved.
       </div>
+
     </footer>
   );
 }

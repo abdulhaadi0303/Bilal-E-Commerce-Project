@@ -28,6 +28,7 @@ export default function LocationsSection() {
     };
   }, []);
 
+  
   return (
     <section ref={sectionRef} className="py-20 bg-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,7 +42,7 @@ export default function LocationsSection() {
             Conveniently Located Across Pakistan
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Visit any of our 3 locations for personalized service and product viewing
+            Visit any of our locations for personalized service and product viewing
           </p>
         </div>
 
@@ -162,7 +163,7 @@ export default function LocationsSection() {
               We offer online consultations and can ship anywhere in Pakistan
             </p>
             <a
-              href="/contact"
+              href="/contact-us"
               className="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-lg font-semibold transition-all hover:scale-105"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

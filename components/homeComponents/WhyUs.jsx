@@ -200,7 +200,7 @@ export default function WhyChooseSection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="/contact"
+                href="/contact-us"
                 className="inline-flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/50"
               >
                 Get a Quote
@@ -209,7 +209,7 @@ export default function WhyChooseSection() {
                 </svg>
               </a>
               <a
-                href="/schools"
+                href="/custom"
                 className="inline-flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all hover:scale-105"
               >
                 Browse Catalog

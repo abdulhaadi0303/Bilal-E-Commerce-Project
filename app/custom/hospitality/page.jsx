@@ -1,177 +1,74 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { whatsappConfig } from '@/lib/data/navigation';
-import StatsGrid from '../../../components/customPageComponents/StatsGrid';
 
 export default function RestaurantHospitalityPage() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const sectionRef = useRef(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Carousel images with dynamic icons
+  const carouselImages = [
+    {
+      src: 'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=1920&q=80',
+      alt: 'Chef Uniforms',
+      title: 'Chef Coats & Jackets',
+      icon: '👨‍🍳',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1920&q=80',
+      alt: 'Waiter Uniforms',
+      title: 'Waiter & Waitress Uniforms',
+      icon: '🍽️',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80',
+      alt: 'Reception Uniforms',
+      title: 'Hotel Reception Uniforms',
+      icon: '🏨',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=1920&q=80',
+      alt: 'Barista Uniforms',
+      title: 'Barista Uniforms',
+      icon: '☕',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1585937421612-70e008356f7b?w=1920&q=80',
+      alt: 'Fast Food Uniforms',
+      title: 'Fast Food Chain Uniforms',
+      icon: '🍔',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=1920&q=80',
+      alt: 'Kitchen Staff',
+      title: 'Kitchen Staff Uniforms',
+      icon: '🔪',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=1920&q=80',
+      alt: 'Bakery Staff',
+      title: 'Bakery & Catering Staff',
+      icon: '🥐',
+    },
+  ];
+
+  // Auto-rotate carousel
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
+    }, 5000);
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    return () => clearInterval(interval);
+  }, [carouselImages.length]);
 
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
-  // ============================================
-  // CATEGORY DATA - Easy to modify
-  // ============================================
-  const categoryData = {
-    name: 'Restaurant & Hospitality',
-    tagline: 'Premium Hospitality Uniforms',
-    description: 'Stylish and functional uniforms for restaurants, hotels, cafes, and food service professionals.',
-    icon: '👨‍🍳',
-    breadcrumb: 'Restaurant & Hospitality',
-  };
-
-  // ============================================
-  // PRODUCTS - Add/Remove/Edit easily
-  // ============================================
-  const products = [
-    {
-      id: 1,
-      name: 'Chef Coats & Jackets',
-      description: 'Professional chef coats with custom logo embroidery',
-      items: ['Premium Cotton', 'Double-Breasted', 'Logo Embroidery', 'Heat Resistant'],
-      image: 'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=600',
-      basePrice: 'From Rs. 1,800',
-      showPrice: false,
-    },
-    {
-      id: 2,
-      name: 'Kitchen Aprons & Caps',
-      description: 'Durable aprons and chef caps for kitchen staff',
-      items: ['Adjustable Straps', 'Large Pockets', 'Stain Resistant', 'Various Colors'],
-      image: 'https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=600',
-      basePrice: 'From Rs. 800',
-      showPrice: false,
-    },
-    {
-      id: 3,
-      name: 'Waiter/Waitress Uniforms',
-      description: 'Elegant server uniforms for fine dining and casual restaurants',
-      items: ['Formal Shirts', 'Vests & Bow Ties', 'Aprons', 'Custom Branding'],
-      image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600',
-      basePrice: 'From Rs. 1,500',
-      showPrice: false,
-    },
-    {
-      id: 4,
-      name: 'Reception & Front Desk',
-      description: 'Professional uniforms for hotel reception and front desk staff',
-      items: ['Blazers & Suits', 'Formal Dresses', 'Scarves', 'Name Badges'],
-      image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600',
-      basePrice: 'From Rs. 2,200',
-      showPrice: false,
-    },
-    {
-      id: 5,
-      name: 'Barista Uniforms',
-      description: 'Trendy and comfortable uniforms for coffee shop staff',
-      items: ['Branded Aprons', 'Polo Shirts', 'Casual Pants', 'Cap/Headwear'],
-      image: 'https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=600',
-      basePrice: 'From Rs. 1,400',
-      showPrice: false,
-    },
-    {
-      id: 6,
-      name: 'Fast Food Chain Uniforms',
-      description: 'Branded uniforms for quick service restaurants',
-      items: ['Polo Shirts', 'Branded Caps', 'Aprons', 'Name Tags'],
-      image: 'https://images.unsplash.com/photo-1585937421612-70e008356f7b?w=600',
-      basePrice: 'From Rs. 1,200',
-      showPrice: false,
-    },
-    {
-      id: 7,
-      name: 'Bakery & Catering Staff',
-      description: 'Hygienic and comfortable uniforms for bakery and catering teams',
-      items: ['Chef Coats', 'Aprons', 'Hair Nets', 'Food-Safe Fabrics'],
-      image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=600',
-      basePrice: 'From Rs. 1,300',
-      showPrice: false,
-    },
-  ];
-
-  // ============================================
-  // ESTABLISHMENTS - Easy to modify
-  // ============================================
-  const establishments = [
-    { name: 'Fine Dining Restaurants', icon: '🍽️' },
-    { name: 'Hotels & Resorts', icon: '🏨' },
-    { name: 'Cafes & Coffee Shops', icon: '☕' },
-    { name: 'Fast Food Chains', icon: '🍔' },
-    { name: 'Bakeries & Patisseries', icon: '🥐' },
-    { name: 'Catering Services', icon: '🎪' },
-  ];
-
-  // ============================================
-  // FEATURES - Easy to modify
-  // ============================================
-  const features = [
-    {
-      icon: '👔',
-      title: 'Professional Appearance',
-      description: 'Stylish designs that enhance your brand image and customer experience',
-    },
-    {
-      icon: '🎨',
-      title: 'Custom Branding',
-      description: 'Logo embroidery, custom colors, and personalized designs available',
-    },
-    {
-      icon: '🧼',
-      title: 'Easy to Clean',
-      description: 'Stain-resistant fabrics that withstand frequent washing and heavy use',
-    },
-    {
-      icon: '💰',
-      title: 'Bulk Restaurant Pricing',
-      description: 'Special discounts for restaurants, hotels, and food chains',
-    },
-    {
-      icon: '🌡️',
-      title: 'Comfort for Long Hours',
-      description: 'Breathable fabrics designed for all-day comfort in hot kitchens',
-    },
-    {
-      icon: '⚡',
-      title: 'Quick Turnaround',
-      description: 'Fast production and delivery for new restaurant openings',
-    },
-  ];
-
-  // ============================================
-  // WHATSAPP INTEGRATION
-  // ============================================
-  const getWhatsAppMessage = (productName = null) => {
-    if (productName) {
-      return `Hi FIAZ Uniform, I'm interested in ${productName} for my restaurant/hotel. Can you provide more details?`;
-    }
+  const getWhatsAppMessage = () => {
     return `Hi FIAZ Uniform, I'm interested in Restaurant & Hospitality uniforms. Can you provide more details and pricing?`;
   };
 
-  const handleWhatsAppClick = (productName = null) => {
-    const message = getWhatsAppMessage(productName);
+  const handleWhatsAppClick = () => {
+    const message = getWhatsAppMessage();
     const url = `https://wa.me/${whatsappConfig.phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
@@ -179,318 +76,346 @@ export default function RestaurantHospitalityPage() {
   return (
     <main className="min-h-screen bg-white">
       
-      {/* ============================================ */}
-      {/* HERO SECTION - Full Background Image */}
-      {/* ============================================ */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=1920&q=80"
-            alt="Restaurant & Hospitality Background"
-            fill
-            className="object-cover"
-            priority
-          />
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-900/85 via-orange-800/80 to-red-900/85"></div>
-          
-          {/* Animated gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-yellow-600/20 via-transparent to-red-600/20 animate-pulse"></div>
-        </div>
-
-        {/* Content Container */}
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center py-20">
-          
-          {/* Breadcrumb */}
-          <div className="flex items-center justify-center gap-2 text-sm text-amber-200 mb-8">
-            <Link href="/" className="hover:text-white transition">Home</Link>
-            <span>/</span>
-            <Link href="/#custom" className="hover:text-white transition">Custom Uniforms</Link>
-            <span>/</span>
-            <span className="text-white font-medium">{categoryData.breadcrumb}</span>
+      {/* HERO SECTION WITH CAROUSEL */}
+      <section className="relative h-[85vh] overflow-hidden">
+        {/* Carousel Images */}
+        {carouselImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1500 ease-in-out ${
+              index === currentImageIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+            }`}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              className="object-cover"
+              priority={index === 0}
+            />
+            {/* Lighter overlay for better image visibility */}
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-900/40 via-orange-800/30 to-red-900/40"></div>
           </div>
-          
-          {/* Main Heading */}
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            {categoryData.tagline}
-          </h1>
-          
-          {/* Description */}
-          <p className="text-xl md:text-2xl text-amber-100 mb-10 max-w-3xl mx-auto leading-relaxed">
-            {categoryData.description}
-          </p>
+        ))}
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <button
-              onClick={() => handleWhatsAppClick()}
-              className="group inline-flex items-center justify-center gap-3 bg-white hover:bg-amber-50 text-slate-900 px-10 py-5 rounded-xl font-bold text-lg transition-all hover:scale-105 hover:shadow-2xl"
-            >
-              <svg className="w-6 h-6 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-              </svg>
-              <span>Get Free Quote</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </button>
-
-            <Link
-              href="/contact-us"
-              className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-md hover:bg-white/20 border-2 border-white/30 text-white px-10 py-5 rounded-xl font-bold text-lg transition-all hover:scale-105"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              <span>Contact Us</span>
-            </Link>
-          </div>
-
-          {/* Stats - Glassmorphism Cards */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-3xl mx-auto px-4">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
-              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">25+</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-amber-200 leading-tight">Years Experience</div>
+        {/* Content Overlay */}
+        <div className="relative z-20 h-full flex items-center justify-center">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+            <div className="flex items-center justify-center gap-2 text-sm text-white/90 mb-8 drop-shadow-lg">
+              <Link href="/" className="hover:text-white transition">Home</Link>
+              <span>/</span>
+              <Link href="/custom" className="hover:text-white transition">Custom Uniforms</Link>
+              <span>/</span>
+              <span className="text-white font-medium">Restaurant & Hospitality</span>
             </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
-              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">400+</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-amber-200 leading-tight">Restaurants</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-2 sm:p-4 md:p-6">
-              <div className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">60K+</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-amber-200 leading-tight">Uniforms Made</div>
-            </div>
-          </div>
-
-
-
-        </div>
-
-        {/* Scroll Down Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-          <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </div>
-      </section>
-
-      {/* ============================================ */}
-      {/* ESTABLISHMENTS SERVED SECTION */}
-      {/* ============================================ */}
-      <section className="py-12 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-8">
-            <h3 className="text-lg font-semibold text-slate-600">Trusted by Food & Hospitality Businesses Across Pakistan</h3>
-          </div>
-          <div className="flex flex-wrap justify-center items-center gap-8">
-            {establishments.map((establishment, index) => (
-              <div key={index} className="flex items-center gap-2 px-4 py-2 bg-amber-50 rounded-lg">
-                <span className="text-2xl">{establishment.icon}</span>
-                <span className="text-slate-700 font-medium">{establishment.name}</span>
+            
+            {/* Current Image Title */}
+            <div className="mb-4 animate-fadeIn">
+              <div className="inline-block bg-white/20 backdrop-blur-md border border-white/30 px-6 py-3 rounded-full">
+                <p className="text-lg font-semibold text-white drop-shadow-lg">
+                  {carouselImages[currentImageIndex].title}
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================ */}
-      {/* PRODUCTS SECTION */}
-      {/* ============================================ */}
-      <section ref={sectionRef} className="py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-              Our Hospitality Uniform Range
-            </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Complete uniform solutions for every food service role
+            </div>
+            
+            <div 
+              key={`icon-${currentImageIndex}`}
+              className="text-6xl mb-6 animate-fadeIn"
+            >
+              {carouselImages[currentImageIndex].icon}
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-2xl">
+              Premium Hospitality Uniforms
+            </h1>
+            
+            <p className="text-lg sm:text-xl md:text-2xl text-white/95 mb-10 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
+              Stylish and functional uniforms for restaurants, hotels, cafes, and food service professionals
             </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product, index) => (
-              <div
-                key={product.id}
-                className={`group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 ${
-                  isVisible ? 'animate-fadeIn' : 'opacity-0'
-                }`}
-                style={{ animationDelay: `${index * 100}ms` }}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <button
+                onClick={handleWhatsAppClick}
+                className="group inline-flex items-center justify-center gap-3 bg-white hover:bg-amber-50 text-slate-900 px-10 py-5 rounded-xl font-bold text-lg transition-all hover:scale-105 hover:shadow-2xl"
               >
-                {/* Product Image */}
-                <div className="relative h-64 overflow-hidden bg-slate-100">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    width={400}
-                    height={300}
-                    className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
-                    <span className="text-sm font-semibold text-amber-600">Premium Quality</span>
-                  </div>
-                </div>
+                <svg className="w-6 h-6 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                <span>Get Free Quote</span>
+              </button>
 
-                {/* Product Info */}
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">
-                    {product.name}
-                  </h3>
-                  
-                  <p className="text-slate-600 mb-4 line-clamp-2">
-                    {product.description}
-                  </p>
+              <Link
+                href="/contact-us"
+                className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-md hover:bg-white/20 border-2 border-white/30 text-white px-10 py-5 rounded-xl font-bold text-lg transition-all hover:scale-105"
+              >
+                <span>Contact Us</span>
+              </Link>
+            </div>
 
-                  {/* Items included */}
-                  <div className="mb-6">
-                    <div className="text-sm font-semibold text-slate-700 mb-2">Features:</div>
-                    <div className="flex flex-wrap gap-2">
-                      {product.items.map((item, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Price Section - Easy to enable later */}
-                  {product.showPrice && product.basePrice && (
-                    <div className="mb-4 pb-4 border-b border-slate-200">
-                      <div className="text-2xl font-bold text-amber-600">
-                        {product.basePrice}
-                      </div>
-                      <div className="text-sm text-slate-500">Bulk discounts available</div>
-                    </div>
-                  )}
-
-                  {/* CTA Button */}
-                  <button
-                    onClick={() => handleWhatsAppClick(product.name)}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105"
-                  >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                    </svg>
-                    <span>Get Quote</span>
-                  </button>
-                </div>
-              </div>
-            ))}
+            {/* Carousel Indicators */}
+            <div className="flex justify-center gap-3">
+              {carouselImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  className={`transition-all duration-300 rounded-full ${
+                    index === currentImageIndex
+                      ? 'bg-white w-12 h-3 shadow-lg'
+                      : 'bg-white/50 hover:bg-white/80 w-3 h-3'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* FEATURES SECTION */}
-      {/* ============================================ */}
+      {/* CONTENT SECTION - SPREAD OUT WITH MORE DETAILS */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-              Why Choose Our Hospitality Uniforms
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+              Restaurant & Hospitality Uniforms
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Elevate your restaurant's image with premium uniforms
+              Complete uniform solutions for every role in the food service and hospitality industry
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="bg-gradient-to-br from-slate-50 to-amber-50 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-              >
-                <div className="text-5xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-slate-800 mb-3">{feature.title}</h3>
-                <p className="text-slate-600">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================ */}
-      {/* WHY CHOOSE US SECTION */}
-      {/* ============================================ */}
-      <section className="py-20 bg-gradient-to-br from-amber-900 via-orange-800 to-red-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Larger Cards Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
-            {/* Left: Content */}
-            <div>
-              <h2 className="text-4xl font-bold mb-6">
-                Trusted by Top Restaurants & Hotels
-              </h2>
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center shrink-0">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Premium Restaurant Quality</h3>
-                    <p className="text-amber-100">Professional uniforms that enhance your brand and customer experience</p>
-                  </div>
+            {/* Chef Coats & Jackets */}
+            <div className="bg-gradient-to-br from-slate-50 to-amber-50 border-2 border-amber-100 rounded-2xl p-10 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="text-5xl">👨‍🍳</div>
+                <h3 className="text-2xl font-bold text-slate-900">Chef Coats & Jackets</h3>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Premium cotton chef coats</p>
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center shrink-0">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Custom Logo Embroidery</h3>
-                    <p className="text-amber-100">Beautiful embroidered logos on chef coats, aprons, and all uniforms</p>
-                  </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Double-breasted design</p>
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center shrink-0">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Comfortable All-Day Wear</h3>
-                    <p className="text-amber-100">Breathable fabrics designed for long shifts in hot kitchens</p>
-                  </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Custom logo embroidery</p>
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center shrink-0">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Special Restaurant Pricing</h3>
-                    <p className="text-amber-100">Bulk discounts for restaurants, hotels, and food chains</p>
-                  </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Heat-resistant fabrics</p>
                 </div>
               </div>
             </div>
 
-            {/* Right: Stats */}
-            <StatsGrid 
-              stats={[
-                { value: '400+', label: 'Restaurants' },
-                { value: '60K+', label: 'Uniforms' },
-                { value: '4.9★', label: 'Rating' },
-                { value: '24/7', label: 'Support' }
-              ]}
-              primaryColor="amber-300"
-              secondaryColor="orange-300"
-              textColor="amber-100"
-            />
+            {/* Waiter/Waitress Uniforms */}
+            <div className="bg-gradient-to-br from-slate-50 to-orange-50 border-2 border-orange-100 rounded-2xl p-10 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="text-5xl">🍽️</div>
+                <h3 className="text-2xl font-bold text-slate-900">Waiter & Waitress Uniforms</h3>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Elegant formal shirts</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Vests and bow ties</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Professional aprons</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Custom branding options</p>
+                </div>
+              </div>
+            </div>
 
+            {/* Reception & Front Desk */}
+            <div className="bg-gradient-to-br from-slate-50 to-amber-50 border-2 border-amber-100 rounded-2xl p-10 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="text-5xl">🏨</div>
+                <h3 className="text-2xl font-bold text-slate-900">Hotel Reception Uniforms</h3>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Professional blazers and suits</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Formal dresses</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Matching scarves and accessories</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Custom name badges</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Barista Uniforms */}
+            <div className="bg-gradient-to-br from-slate-50 to-orange-50 border-2 border-orange-100 rounded-2xl p-10 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="text-5xl">☕</div>
+                <h3 className="text-2xl font-bold text-slate-900">Barista Uniforms</h3>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Branded aprons with logo</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Comfortable polo shirts</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Casual work pants</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Caps and headwear</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Fast Food Chain Uniforms */}
+            <div className="bg-gradient-to-br from-slate-50 to-amber-50 border-2 border-amber-100 rounded-2xl p-10 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="text-5xl">🍔</div>
+                <h3 className="text-2xl font-bold text-slate-900">Fast Food Chain Uniforms</h3>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Branded polo shirts</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Custom printed caps</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Protective aprons</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Name tags included</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Kitchen Staff Uniforms */}
+            <div className="bg-gradient-to-br from-slate-50 to-orange-50 border-2 border-orange-100 rounded-2xl p-10 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="text-5xl">🔪</div>
+                <h3 className="text-2xl font-bold text-slate-900">Kitchen Staff Uniforms</h3>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Durable kitchen aprons</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Chef hats and caps</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Stain-resistant fabrics</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Large utility pockets</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Bakery & Catering Staff */}
+            <div className="bg-gradient-to-br from-slate-50 to-amber-50 border-2 border-amber-100 rounded-2xl p-10 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="text-5xl">🥐</div>
+                <h3 className="text-2xl font-bold text-slate-900">Bakery & Catering Staff</h3>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Hygienic chef coats</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Protective aprons</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Hair nets and caps</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-slate-700 text-lg">Food-safe fabrics</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* CTA Button */}
+          <div className="mt-16 text-center">
+            <button
+              onClick={handleWhatsAppClick}
+              className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-10 py-5 rounded-xl font-bold text-xl transition-all hover:scale-105 shadow-xl"
+            >
+              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              <span>Get Quote on WhatsApp</span>
+            </button>
           </div>
         </div>
       </section>
+
+      {/* FEATURES SECTION - COMPACT */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-3">
+              Why Choose FIAZ Uniform
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-xl p-6 shadow-md text-center">
+              <div className="text-4xl mb-3">🎨</div>
+              <h3 className="text-lg font-bold text-slate-800 mb-2">Custom Branding</h3>
+              <p className="text-sm text-slate-600">Logo embroidery on all uniforms</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-md text-center">
+              <div className="text-4xl mb-3">✨</div>
+              <h3 className="text-lg font-bold text-slate-800 mb-2">Premium Quality</h3>
+              <p className="text-sm text-slate-600">Comfortable & durable fabrics</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-md text-center">
+              <div className="text-4xl mb-3">💰</div>
+              <h3 className="text-lg font-bold text-slate-800 mb-2">Bulk Discounts</h3>
+              <p className="text-sm text-slate-600">Special restaurant pricing</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
     </main>
   );

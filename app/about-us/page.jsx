@@ -6,7 +6,7 @@ export default function AboutPage() {
     <main className="min-h-screen bg-white">
       
       {/* Hero Section */}
-      <section className="bg-slate-800 text-white py-16">
+      <section className="bg-linear-to-br from-slate-900 via-slate-700 to-slate-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">About FIAZ Uniform</h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -40,12 +40,12 @@ export default function AboutPage() {
             </div>
             
             {/* Story Image - Replace with actual path later */}
-            <div className="relative h-96 rounded-2xl overflow-hidden shadow-xl">
+            <div className="relative h-100 overflow-hidden ">
               <Image
-                src="https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=800"
+                src="/logo.jpg"
                 alt="FIAZ Uniform Workshop"
                 fill
-                className="object-cover"
+                className="object-contain"
               />
               {/* Temporary placeholder - Download and replace with: /images/about/story.jpg */}
             </div>
